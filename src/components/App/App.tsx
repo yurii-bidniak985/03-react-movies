@@ -14,9 +14,9 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
-  const handleSelectMovie = (movie: Movie) => {
-    console.log("Selected:", movie.title);
-  };
+  //   const handleSelectMovie = (movie: Movie) => {
+  //     console.log("Selected:", movie.title);
+  //   };
 
   const handleSearch = async (query: string) => {
     setMovies([]);
@@ -47,7 +47,7 @@ export default function App() {
       {isLoading && <Loader />}
 
       {!isLoading && !isError && movies.length > 0 && (
-        <MovieGrid movies={movies} onSelect={handleSelectMovie} />
+        <MovieGrid movies={movies} onSelect={setSelectedMovie} />
       )}
       {selectedMovie && (
         <MovieModal

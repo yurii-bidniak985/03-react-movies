@@ -8,8 +8,6 @@ interface MovieModalProps {
   onClose: () => void;
 }
 
-const modalRoot = document.querySelector("#modal-root") || document.body;
-
 export default function MovieModal({ movies, onClose }: MovieModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -23,18 +21,18 @@ export default function MovieModal({ movies, onClose }: MovieModalProps) {
       document.body.style.overflow = "auto";
     };
   }, [onClose]);
-
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+  const modalRoot = document.querySelector("#modal-root") || document.body;
   return createPortal(
-    <div
-      className={css.backdrop}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
+    <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.modal}>
         <button className={css.closeButton} onClick={onClose}>
           &times;
         </button>
         <img
-          src={"https://image.tmdb.org/t/p/original/${movie.backdrop_path}"}
+          src={`https://image.tmdb.org/t/p/original/${movies.backdrop_path}`}
           alt={movies.title}
           className={css.image}
         />
